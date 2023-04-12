@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: demo-pipeline
+spec:
+  entrypoint: entry
+  templates:
+  - name: entry
+    dag:
+      tasks:
+      - name: approval
+        templateRef:
+          name: suspend-template
+          template: suspend
+        arguments:
+      - name: deployment
+        templateRef:
+          name: argocd-sync
+          template: argocd-sync-and-wait
+        dependencies: [Approval]
+        arguments:
+          parameters:
+          - name: argocd-version
+            value: "{{workflow.parameters.deployment-argocd-version}}"
+          - name: application-name
+            value: "{{workflow.parameters.deployment-application-name}}"
+          - name: revision
+            value: "{{workflow.parameters.deployment-revision}}"
+          - name: flags
+            value: "{{workflow.parameters.deployment-flags}}"
+          - name: argocd-server-address
+            value: "{{workflow.parameters.deployment-argocd-server-address}}"
+          - name: argocd-credentials-secret
+            value: "{{workflow.parameters.deployment-argocd-credentials-secret}}"
