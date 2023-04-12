@@ -1,0 +1,14 @@
+arguments:
+  parameters:
+    - name: deployment-argocd-version
+      value: v2.0.5
+    - name: deployment-application-name
+      value: test
+    - name: deployment-revision
+      value: master
+    - name: deployment-flags
+      value: --
+    - name: deployment-argocd-server-address
+      value: acalvio-argocd-1.greenops.io
+    - name: deployment-argocd-credentials-secret
+      value: argocd-user
