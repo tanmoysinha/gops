@@ -17,7 +17,7 @@ spec:
         templateRef:
           name: argocd-sync
           template: argocd-sync-and-wait
-        dependencies: [Approval]
+        dependencies: [approval]
         arguments:
           parameters:
           - name: argocd-version
